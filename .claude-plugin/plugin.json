@@ -1,0 +1,12 @@
+{
+  "name": "t-minus",
+  "version": "1.0.0",
+  "description": "Pre-launch audit for web and mobile apps (especially AI-built ones): security, legal compliance, UX, edge cases, accessibility, design slop and SEO, with a written report.",
+  "author": {
+    "name": "Vikesh Devar"
+  },
+  "homepage": "https://github.com/VikDevarStudio/t-minus",
+  "repository": "https://github.com/VikDevarStudio/t-minus",
+  "license": "MIT",
+  "keywords": ["security", "audit", "launch", "compliance", "accessibility", "vibe-coding", "claude-code", "skill"]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "t-minus",
+  "owner": {
+    "name": "Vikesh Devar"
+  },
+  "plugins": [
+    {
+      "name": "t-minus",
+      "source": "./",
+      "description": "Pre-launch audit for web and mobile apps: security, legal, UX, edge cases, accessibility, design and SEO."
+    }
+  ]
+}
