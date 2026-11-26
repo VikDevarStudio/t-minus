@@ -1,78 +1,76 @@
 # t-minus
 
-The countdown before you ship. A Claude skill that audits and fixes your app before launch.
+**The countdown before you ship.** A Claude skill that audits your app before launch and fixes what it finds.
 
-> **Why "T-minus"?** In rocket launches, "T" is the moment of liftoff, and "T-minus 10" means ten seconds before launch. During the countdown, every system is checked one by one, and if anything is not safe, the launch is held. This skill does the same for your app: a final go/no-go check of every system before it goes live.
+Getting hacked is only one way a launch goes wrong. You can also get fined for a missing privacy policy, charge someone twice when they double-tap "Pay", or lose users because sign-in takes three tabs. t-minus checks all of it in one pass:
 
-Built for apps made fast with AI ("vibe coding"), but it works on any web or mobile app. Claude reads your codebase, works through a checklist of security holes, legal gaps, UX problems, real-world edge cases, accessibility issues and generic AI design patterns, fixes what it can, tests each fix, and writes a report.
+- **Will it get hacked?** 31 concrete attack scenarios, from changing an ID in the URL to faking a payment
+- **Will it get you in legal trouble?** Privacy policy, cookie consent, age gate, auto-renewal rules, unsubscribe links
+- **Will it break in real life?** Double taps, iPhone photos, time zones, lost signal after paying, 10,000 users at once
+- **Will people actually like using it?** Sign-in friction, persistent login, realtime updates, native-app feel
+- **Does it look AI-generated?** Removes the usual tells: gradient hero text, glassmorphism, untouched shadcn, Inter everywhere
 
-## What it checks
+Then it tests every fix and writes a report with a final **Go / No-Go** verdict.
 
-| Area | Examples |
-|---|---|
-| **Security** | Keys in the browser, missing row-level security, IDOR (changing an ID in the URL), SQL injection, XSS, price tampering, fake payments, unverified webhooks, rate limiting, CSRF, session cookies, security headers, leaked secrets in git history, 31 concrete attack scenarios |
-| **Reliability** | Double-tapped pay buttons, capitalized emails, apostrophes in names, iPhone HEIC photos, time zones, lost connection after paying, account deletion, traffic spikes |
-| **Legal** | Privacy policy that matches what you collect, terms, refund and cookie policies, cookie banner with a real reject button, no trackers before consent, data export and deletion, age gate, auto-renewal disclosure, unsubscribe links, self-hosted fonts, session replay |
-| **UX** | Branding, low-friction sign-in, persistent login, realtime updates, native-app feel, always-reachable primary actions, profile and logout |
-| **Accessibility** | Alt text, color contrast, keyboard navigation, automated checks |
-| **Design** | Removes common AI-generated design tells (gradient hero text, glassmorphism, untouched shadcn, Inter everywhere, and more) |
-| **Public pages / SEO** | 404 page, meta tags, Open Graph images, robots.txt, schema, analytics after consent |
-
-Items that only apply to some apps (payments, uploads, AI features, subscriptions, marketing pages) are marked conditional. Every item ends up in the report as **Fixed**, **Already OK**, **Not applicable** (with a reason) or **Needs human**.
+> **Why "T-minus"?** In rocket launches, "T" is the moment of liftoff, and "T-minus 10" means ten seconds before launch. During the countdown, every system is checked one by one, and if anything is not safe, the launch is held. This skill does the same for your app.
 
 ## Install
 
-### Claude Code (as a plugin)
-
+**Claude Code (plugin)**
 ```
 /plugin marketplace add VikDevarStudio/t-minus
 /plugin install t-minus@t-minus
 ```
+In the Claude desktop app, open the plugin browser in a local Code session and add the marketplace `VikDevarStudio/t-minus`.
 
-### Any agent with the skills CLI
-
+**Any agent with the skills CLI** (Claude Code, Cursor, Codex and others)
 ```bash
 npx skills add VikDevarStudio/t-minus --skill t-minus
 ```
 
-### Claude Code (manual)
-
-Copy the skill folder into your skills directory:
-
+**Manual**
 ```bash
-# for all projects
-mkdir -p ~/.claude/skills
-cp -r skills/t-minus ~/.claude/skills/
-
-# or for one project only
-mkdir -p .claude/skills
-cp -r skills/t-minus .claude/skills/
+git clone https://github.com/VikDevarStudio/t-minus
+cp -r t-minus/skills/t-minus ~/.claude/skills/
 ```
-
-### Claude apps (claude.ai / desktop)
-
-Zip the `skills/t-minus` folder and upload it in the Skills section of your Claude settings.
 
 ## Usage
 
-Open your project and ask:
+Open your project and say:
 
 ```
 Run t-minus on this app before I launch.
 ```
 
-Or just say you are about to ship; the skill triggers on launch and shipping requests. Claude will:
+Claude will:
 
-1. Detect your stack
-2. Audit and list findings
-3. Fix security issues, then UX, legal, accessibility, design and SEO
+1. Detect your stack (Next.js, Supabase, Stripe, Firebase, Express, whatever you use) and skip what does not apply
+2. Audit everything and list findings before touching code
+3. Fix security first, then UX, edge cases, legal, accessibility, design and SEO
 4. Ask before anything destructive (rewriting git history, migrating data, rotating keys)
 5. Test every fix
-6. Write `LAUNCH_AUDIT_REPORT.md`, including a list of tasks only you can do (2FA on your accounts, billing alerts, legal review)
+6. Write `LAUNCH_AUDIT_REPORT.md` with a status for every item, a Go / No-Go verdict, and a short list of things only you can do (2FA on your accounts, billing alerts, legal review)
+
+## What it checks
+
+| Area | Checklist |
+|---|---|
+| Security | [security.md](skills/t-minus/references/security.md) |
+| UX and product | [ux.md](skills/t-minus/references/ux.md) |
+| Reliability and edge cases | [reliability.md](skills/t-minus/references/reliability.md) |
+| Legal and compliance | [legal.md](skills/t-minus/references/legal.md) |
+| Accessibility and design | [accessibility-and-design.md](skills/t-minus/references/accessibility-and-design.md) |
+| Public pages and SEO | [public-pages-seo.md](skills/t-minus/references/public-pages-seo.md) |
+
+Items that only apply to some apps (payments, uploads, AI features, subscriptions, marketing pages) are marked conditional.
+
+## Contributing
+
+Found a launch problem t-minus missed? [Open an issue](https://github.com/VikDevarStudio/t-minus/issues) with what happened and how to check for it.
 
 ## Disclaimer
 
-This skill is a checklist and a helper, not a guarantee. It does not replace a professional security audit or legal advice. Have a qualified person review your legal pages before launch.
+t-minus is a checklist and helper, not a guarantee. It does not replace a professional security audit or legal advice. Have a qualified person review your legal pages before launch.
 
 ## License
 
